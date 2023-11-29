@@ -17,6 +17,7 @@ services:
       - cadvisor
       - node_exporter
       - adguard_exporter
+      - fortigate_exporter
     networks:
       - prometheus
   
@@ -35,6 +36,18 @@ services:
       - /dev/disk/:/dev/disk:ro
     devices:
       - /dev/kmsg
+    networks:
+      - prometheus
+
+  fortigate_exporter:
+    container_name: fortigate_exporter
+    image: quay.io/bluecmd/fortigate_exporter:master
+    restart: unless-stopped
+    command: ["-auth-file", "/config/fortigate-key.yaml", "-insecure"]
+    volumes:
+      - ./fortigate-key.yaml:/config/fortigate-key.yaml
+    ports:
+      - 9710:9710
     networks:
       - prometheus
 
