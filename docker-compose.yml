@@ -1,0 +1,93 @@
+---
+version: "3.8"
+
+services:
+  prometheus:
+    command: "--config.file=/etc/prometheus/prometheus.yaml"
+    container_name: prometheus
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    user: root
+    ports:
+      - 9090:9090
+    volumes:
+      - ./config/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - ./data:/prometheus
+    depends_on:
+      - cadvisor
+      - node_exporter
+      - adguard_exporter
+    networks:
+      - prometheus
+  
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:latest
+    privileged: true
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    networks:
+      - prometheus
+
+  node_exporter:
+    command: "--path.rootfs=/host"
+    container_name: node_exporter
+    image: quay.io/prometheus/node-exporter:latest
+    pid: host
+    restart: unless-stopped
+    ports:
+      - 9100:9100
+    volumes:
+      - /:/host:ro,rslave
+    networks:
+      - prometheus
+  
+  adguard_exporter:
+    container_name: adguard_exporter
+    image: ebrianne/adguard-exporter:latest
+    restart: unless-stopped
+    ports:
+      - "9617:9617"
+    environment:
+      - adguard_protocol=http
+      - adguard_hostname=${ADGUARD_HOST}
+      - adguard_username=${ADGUARD_USERNAME}
+      - adguard_password=${ADGUARD_PASSWORD}
+      - interval=10s
+      - log_limit=10000
+      - server_port=9617
+    networks:
+      - prometheus
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana-oss:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - prometheus
+
+
+volumes:
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+networks:
+  prometheus:
+    driver: bridge
