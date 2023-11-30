@@ -1,27 +1,19 @@
 ---
-version: "3.8"
+version: '3.8'
 
 services:
-  prometheus:
-    command: "--config.file=/etc/prometheus/prometheus.yaml"
-    container_name: prometheus
-    image: prom/prometheus:latest
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
     restart: unless-stopped
-    user: root
     ports:
-      - 9090:9090
+      - 9443:9443
     volumes:
-      - ./config/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
-      - ./data:/prometheus
-    depends_on:
-      - cadvisor
-      - node_exporter
-      - adguard_exporter
-      - fortigate_exporter
-      - portainer
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
     networks:
-      - prometheus
-  
+      - home-lab
+
   cadvisor:
     container_name: cadvisor
     image: gcr.io/cadvisor/cadvisor:latest
@@ -38,22 +30,12 @@ services:
     devices:
       - /dev/kmsg
     networks:
-      - prometheus
-
-  fortigate_exporter:
-    container_name: fortigate_exporter
-    image: quay.io/bluecmd/fortigate_exporter:master
-    restart: unless-stopped
-    command: ["-auth-file", "/config/fortigate-key.yaml", "-insecure"]
-    volumes:
-      - ./fortigate-key.yaml:/config/fortigate-key.yaml
-    ports:
-      - 9710:9710
-    networks:
-      - prometheus
+      - home-lab
+    depends_on:
+      - portainer
 
   node_exporter:
-    command: "--path.rootfs=/host"
+    command: '--path.rootfs=/host'
     container_name: node_exporter
     image: quay.io/prometheus/node-exporter:latest
     pid: host
@@ -63,26 +45,16 @@ services:
     volumes:
       - /:/host:ro,rslave
     networks:
-      - prometheus
+      - home-lab
+    depends_on:
+      - portainer
 
-  portainer:
-    container_name: portainer
-    image: portainer/portainer-ce:latest
-    restart: unless-stopped
-    ports:
-      - 9443:9443
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer-data:/data
-    networks:
-      - prometheus
-  
   adguard_exporter:
     container_name: adguard_exporter
     image: ebrianne/adguard-exporter:latest
     restart: unless-stopped
     ports:
-      - "9617:9617"
+      - '9617:9617'
     environment:
       - adguard_protocol=http
       - adguard_hostname=${ADGUARD_HOST}
@@ -92,6 +64,51 @@ services:
       - log_limit=10000
       - server_port=9617
     networks:
+      - home-lab
+    depends_on:
+      - portainer
+
+  # fortigate_exporter:
+  #   container_name: fortigate_exporter
+  #   image: quay.io/bluecmd/fortigate_exporter:latest
+  #   restart: unless-stopped
+  #   command: ["-auth-file", "/config/fortigate-key.yaml", "-insecure"]
+  #   volumes:
+  #     - ./fortigate-key.yaml:/config/fortigate-key.yaml
+  #   ports:
+  #     - 9710:9710
+  #   networks:
+  #     - prometheus
+
+  prometheus:
+    command: '--config.file=/etc/prometheus/prometheus.yaml'
+    container_name: prometheus
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    user: root
+    ports:
+      - 9090:9090
+    volumes:
+      - ./config/prometheus/config.yaml:/etc/prometheus/prometheus.yaml:ro
+      - prometheus-data:/prometheus
+    networks:
+      - home-lab
+    depends_on:
+      - cadvisor
+      - node_exporter
+      - adguard_exporter
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana-oss:latest
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - home-lab
+    depends_on:
       - prometheus
 
   homer:
@@ -99,27 +116,13 @@ services:
     container_name: homer
     restart: unless-stopped
     ports:
-      - "8000:8080"
+      - '8000:8080'
     volumes:
-      - homer-data:/www/assets
+      - ./config/homer/assets:/www/assets
+    networks:
+      - home-lab
     depends_on:
       - grafana
-    networks:
-      - prometheus
-
-  grafana:
-    container_name: grafana
-    image: grafana/grafana-oss:latest
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana-data:/var/lib/grafana
-    depends_on:
-      - prometheus
-    networks:
-      - prometheus
-
 
 volumes:
   prometheus-data:
@@ -128,9 +131,7 @@ volumes:
     driver: local
   portainer-data:
     driver: local
-  homer-data:
-    driver: local
 
 networks:
-  prometheus:
+  home-lab:
     driver: bridge
