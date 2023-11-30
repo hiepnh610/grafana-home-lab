@@ -94,6 +94,19 @@ services:
     networks:
       - prometheus
 
+  homer:
+    image: b4bz/homer:latest
+    container_name: homer
+    restart: unless-stopped
+    ports:
+      - "8000:8080"
+    volumes:
+      - homer-data:/www/assets
+    depends_on:
+      - grafana
+    networks:
+      - prometheus
+
   grafana:
     container_name: grafana
     image: grafana/grafana-oss:latest
@@ -114,6 +127,8 @@ volumes:
   grafana-data:
     driver: local
   portainer-data:
+    driver: local
+  homer-data:
     driver: local
 
 networks:
