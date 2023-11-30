@@ -18,6 +18,7 @@ services:
       - node_exporter
       - adguard_exporter
       - fortigate_exporter
+      - portainer
     networks:
       - prometheus
   
@@ -63,6 +64,18 @@ services:
       - /:/host:ro,rslave
     networks:
       - prometheus
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped
+    ports:
+      - 9443:9443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
+    networks:
+      - prometheus
   
   adguard_exporter:
     container_name: adguard_exporter
@@ -99,6 +112,8 @@ volumes:
   prometheus-data:
     driver: local
   grafana-data:
+    driver: local
+  portainer-data:
     driver: local
 
 networks:
