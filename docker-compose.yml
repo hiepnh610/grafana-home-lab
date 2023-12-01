@@ -68,19 +68,19 @@ services:
     depends_on:
       - portainer
 
-  # fortigate_exporter:
-  #   container_name: fortigate_exporter
-  #   image: quay.io/bluecmd/fortigate_exporter:latest
-  #   restart: unless-stopped
-  #   command: ["-auth-file", "/config/fortigate-key.yaml", "-insecure"]
-  #   volumes:
-  #     - ./fortigate-key.yaml:/config/fortigate-key.yaml
-  #   ports:
-  #     - 9710:9710
-  #   networks:
-  #     - prometheus
-  #   depends_on:
-  #     - portainer
+  fortigate_exporter:
+    container_name: fortigate_exporter
+    image: quay.io/bluecmd/fortigate_exporter:latest
+    restart: unless-stopped
+    command: ['-auth-file', '/config/fortigate-key.yaml', '-insecure']
+    volumes:
+      - ./fortigate-key.yaml:/config/fortigate-key.yaml
+    ports:
+      - 9710:9710
+    networks:
+      - prometheus
+    depends_on:
+      - portainer
 
   prometheus:
     command: '--config.file=/etc/prometheus/prometheus.yaml'
