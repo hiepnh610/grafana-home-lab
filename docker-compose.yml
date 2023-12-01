@@ -74,7 +74,7 @@ services:
     restart: unless-stopped
     command: ['-auth-file', '/config/fortigate-key.yaml', '-insecure']
     volumes:
-      - ./fortigate-key.yaml:/config/fortigate-key.yaml
+      - ./config/fortigate/fortigate-key.yaml:/config/fortigate-key.yaml
     ports:
       - 9710:9710
     networks:
