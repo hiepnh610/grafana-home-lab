@@ -1,2 +1,5 @@
 'https://10.0.0.1':
   token: api-key-goes-here
+probes:
+  exclude:
+    - System/SensorInfo
