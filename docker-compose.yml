@@ -78,7 +78,7 @@ services:
     ports:
       - 9710:9710
     networks:
-      - prometheus
+      - home-lab
     depends_on:
       - portainer
 
