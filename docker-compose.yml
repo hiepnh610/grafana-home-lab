@@ -79,6 +79,8 @@ services:
   #     - 9710:9710
   #   networks:
   #     - prometheus
+  #   depends_on:
+  #     - portainer
 
   prometheus:
     command: '--config.file=/etc/prometheus/prometheus.yaml'
