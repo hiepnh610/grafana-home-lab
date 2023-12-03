@@ -128,19 +128,6 @@ services:
     depends_on:
       - grafana
 
-  nginx:
-    container_name: nginx
-    image: nginx:latest
-    restart: unless-stopped
-    ports:
-      - '80:80'
-    volumes:
-      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
-    networks:
-      - home-lab
-    depends_on:
-      - homer
-
 volumes:
   prometheus-data:
     driver: local
