@@ -28,7 +28,7 @@ scrape_configs:
     static_configs:
       - targets: ['cadvisor:8080']
 
-  - job_name: 'snmp'
+  - job_name: 'mikrotik'
     static_configs:
       - targets:
           - 10.0.10.1
