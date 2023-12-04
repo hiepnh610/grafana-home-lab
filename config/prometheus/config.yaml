@@ -46,7 +46,7 @@ scrape_configs:
   # Global exporter-level metrics
   - job_name: 'snmp_exporter'
     static_configs:
-      - targets: ['localhost:9116']
+      - targets: ['10.0.10.11:9116']
 
   - job_name: 'fortigate_exporter'
     metrics_path: /probe
