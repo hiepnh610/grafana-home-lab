@@ -28,7 +28,7 @@ scrape_configs:
     static_configs:
       - targets: ['cadvisor:8080']
 
-  - job_name: 'Mikrotik'
+  - job_name: 'snmp'
     static_configs:
       - targets:
           - 10.0.10.1
@@ -42,6 +42,11 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: 10.0.10.11:9116
+
+  # Global exporter-level metrics
+  - job_name: 'snmp_exporter'
+    static_configs:
+      - targets: ['localhost:9116']
 
   - job_name: 'fortigate_exporter'
     metrics_path: /probe
