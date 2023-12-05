@@ -41,8 +41,8 @@ services:
         tag: 'metrics'
         url: 'https://grafana.helixnest.com/d/4dMaCsRZz/docker?orgId=2&refresh=1m&from=1701761787016&to=1701765387016&theme=dark'
 
-      - name: 'Fortigate'
-        logo: 'assets/logo/fortigate.png'
+      - name: 'Fortinet'
+        logo: 'assets/logo/fortinet.png'
         subtitle: 'Visualize'
         tag: 'metrics'
         url: 'https://grafana.helixnest.com/d/T5zWe8WRz/fortigate?orgId=2&refresh=1m&from=1701764341276&to=1701767941276'
