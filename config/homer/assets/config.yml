@@ -53,7 +53,49 @@ services:
         logo: 'assets/logo/portainer.png'
         subtitle: 'Manage'
         tag: 'management'
-        url: '#'
+        url: 'https://portainer.helixnest.com'
+
+      - name: 'Mikrotik'
+        logo: 'assets/logo/mikrotik.png'
+        subtitle: 'Manage'
+        tag: 'management'
+        url: 'https://mikrotik.helixnest.com'
+
+      - name: 'Fortinet'
+        logo: 'assets/logo/fortinet.png'
+        subtitle: 'Manage'
+        tag: 'management'
+        url: 'https://fortinet.helixnest.com'
+
+      - name: 'Hikvision'
+        logo: 'assets/logo/hikvision.png'
+        subtitle: 'Manage'
+        tag: 'management'
+        url: 'https://hikvision.helixnest.com'
+
+      - name: 'ODI'
+        logo: 'assets/logo/odi.png'
+        subtitle: 'Manage'
+        tag: 'management'
+        url: 'https://odi.helixnest.com'
+
+      - name: 'Adguard'
+        logo: 'assets/logo/adguard.png'
+        subtitle: 'Manage'
+        tag: 'management'
+        url: 'https://adguard.helixnest.com'
+
+      - name: 'Aruba'
+        logo: 'assets/logo/aruba.png'
+        subtitle: 'Manage'
+        tag: 'management'
+        url: 'https://aruba.helixnest.com'
+
+      - name: 'Grafana'
+        logo: 'assets/logo/grafana.png'
+        subtitle: 'Manage'
+        tag: 'management'
+        url: 'https://grafana.helixnest.com'
 
 stylesheet:
   - 'assets/custom.css'
