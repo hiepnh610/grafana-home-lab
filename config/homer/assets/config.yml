@@ -21,25 +21,31 @@ services:
         subtitle: 'Visualize'
         tag: 'metrics'
         keywords: ''
-        url: 'https://www.grafana.helixnest.com/d/MIBVglomg/adguard?orgId=2&refresh=10s&from=1701761540136&to=1701765140136'
+        url: 'https://grafana.helixnest.com/d/MIBVglomg/adguard?orgId=2&refresh=10s&from=1701761540136&to=1701765140136'
 
       - name: 'Mikrotik'
         logo: 'assets/logo/mikrotik.png'
         subtitle: 'Visualize'
         tag: 'metrics'
-        url: 'https://www.grafana.helixnest.com/d/LyX-A_nnk/mikrotik?orgId=2&refresh=1m&from=1701761841449&to=1701765441449&theme=dark'
+        url: 'https://grafana.helixnest.com/d/LyX-A_nnk/mikrotik?orgId=2&refresh=1m&from=1701761841449&to=1701765441449&theme=dark'
 
       - name: 'Node'
         logo: 'assets/logo/prometheus.png'
         subtitle: 'Visualize'
         tag: 'metrics'
-        url: 'https://www.grafana.helixnest.com/d/rYdddlPWk/node?orgId=2&from=1701761879966&to=1701765479966&theme=dark'
+        url: 'https://grafana.helixnest.com/d/rYdddlPWk/node?orgId=2&from=1701761879966&to=1701765479966&theme=dark'
 
       - name: 'Docker'
         logo: 'assets/logo/docker.png'
         subtitle: 'Visualize'
         tag: 'metrics'
-        url: 'https://www.grafana.helixnest.com/d/4dMaCsRZz/docker?orgId=2&refresh=1m&from=1701761787016&to=1701765387016&theme=dark'
+        url: 'https://grafana.helixnest.com/d/4dMaCsRZz/docker?orgId=2&refresh=1m&from=1701761787016&to=1701765387016&theme=dark'
+
+      - name: 'Fortigate'
+        logo: 'assets/logo/fortigate.png'
+        subtitle: 'Visualize'
+        tag: 'metrics'
+        url: 'https://grafana.helixnest.com/d/T5zWe8WRz/fortigate?orgId=2&refresh=1m&from=1701764341276&to=1701767941276'
 
   - name: 'Management'
     items:
