@@ -29,11 +29,11 @@ services:
         tag: 'metrics'
         url: 'https://grafana.helixnest.com/d/LyX-A_nnk/mikrotik?orgId=2&refresh=1m&from=1701761841449&to=1701765441449&theme=dark'
 
-      - name: 'Node'
-        logo: 'assets/logo/prometheus.png'
+      - name: 'Fortinet'
+        logo: 'assets/logo/fortinet.png'
         subtitle: 'Visualize'
         tag: 'metrics'
-        url: 'https://grafana.helixnest.com/d/rYdddlPWk/node?orgId=2&from=1701761879966&to=1701765479966&theme=dark'
+        url: 'https://grafana.helixnest.com/d/T5zWe8WRz/fortigate?orgId=2&refresh=1m&from=1701764341276&to=1701767941276'
 
       - name: 'Docker'
         logo: 'assets/logo/docker.png'
@@ -41,19 +41,19 @@ services:
         tag: 'metrics'
         url: 'https://grafana.helixnest.com/d/4dMaCsRZz/docker?orgId=2&refresh=1m&from=1701761787016&to=1701765387016&theme=dark'
 
-      - name: 'Fortinet'
-        logo: 'assets/logo/fortinet.png'
+      - name: 'Node'
+        logo: 'assets/logo/prometheus.png'
         subtitle: 'Visualize'
         tag: 'metrics'
-        url: 'https://grafana.helixnest.com/d/T5zWe8WRz/fortigate?orgId=2&refresh=1m&from=1701764341276&to=1701767941276'
+        url: 'https://grafana.helixnest.com/d/rYdddlPWk/node?orgId=2&from=1701761879966&to=1701765479966&theme=dark'
 
   - name: 'Management'
     items:
-      - name: 'Portainer'
-        logo: 'assets/logo/portainer.png'
+      - name: 'Adguard'
+        logo: 'assets/logo/adguard.png'
         subtitle: 'Manage'
         tag: 'management'
-        url: 'https://portainer.helixnest.com'
+        url: 'https://adguard.helixnest.com'
 
       - name: 'Mikrotik'
         logo: 'assets/logo/mikrotik.png'
@@ -67,6 +67,12 @@ services:
         tag: 'management'
         url: 'https://fortinet.helixnest.com'
 
+      - name: 'Portainer'
+        logo: 'assets/logo/portainer.png'
+        subtitle: 'Manage'
+        tag: 'management'
+        url: 'https://portainer.helixnest.com'
+
       - name: 'Hikvision'
         logo: 'assets/logo/hikvision.png'
         subtitle: 'Manage'
@@ -78,12 +84,6 @@ services:
         subtitle: 'Manage'
         tag: 'management'
         url: 'https://odi.helixnest.com'
-
-      - name: 'Adguard'
-        logo: 'assets/logo/adguard.png'
-        subtitle: 'Manage'
-        tag: 'management'
-        url: 'https://adguard.helixnest.com'
 
       - name: 'Aruba'
         logo: 'assets/logo/aruba.png'
