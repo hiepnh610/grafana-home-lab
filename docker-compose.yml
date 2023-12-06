@@ -1,6 +1,9 @@
 ---
 version: '3.8'
 
+environment:
+  - TZ=Asia/Ho_Chi_Minh
+
 services:
   portainer:
     container_name: portainer
