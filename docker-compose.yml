@@ -59,8 +59,6 @@ services:
     container_name: adguard_exporter
     image: ebrianne/adguard-exporter:latest
     restart: unless-stopped
-    environment:
-      - TZ=Asia/Ho_Chi_Minh
     ports:
       - '9617:9617'
     environment:
@@ -71,6 +69,7 @@ services:
       - interval=10s
       - log_limit=10000
       - server_port=9617
+      - TZ=Asia/Ho_Chi_Minh
     networks:
       - home-lab
     depends_on:
