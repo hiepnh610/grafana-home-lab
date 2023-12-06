@@ -28,7 +28,7 @@ services:
         logo: 'assets/logo/mikrotik.png'
         subtitle: 'Visualize'
         tag: 'metrics'
-        url: 'https://grafana.helixnest.com/d/LyX-A_nnk/mikrotik?orgId=2&refresh=1m'
+        url: 'https://grafana.helixnest.com/d/LyX-A_nnk/mikrotik?orgId=2&refresh=1m&from=now-1h&to=now'
         target: '_blank'
 
       - name: 'Fortinet'
