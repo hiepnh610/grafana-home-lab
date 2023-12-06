@@ -1,14 +1,13 @@
 ---
 version: '3.8'
 
-environment:
-  - TZ=Asia/Ho_Chi_Minh
-
 services:
   portainer:
     container_name: portainer
     image: portainer/portainer-ce:latest
     restart: unless-stopped
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
     ports:
       - 9443:9443
     volumes:
@@ -22,6 +21,8 @@ services:
     image: gcr.io/cadvisor/cadvisor:latest
     privileged: true
     restart: unless-stopped
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
     ports:
       - 8080:8080
     volumes:
@@ -43,6 +44,8 @@ services:
     image: quay.io/prometheus/node-exporter:latest
     pid: host
     restart: unless-stopped
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
     ports:
       - 9100:9100
     volumes:
@@ -56,6 +59,8 @@ services:
     container_name: adguard_exporter
     image: ebrianne/adguard-exporter:latest
     restart: unless-stopped
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
     ports:
       - '9617:9617'
     environment:
@@ -76,6 +81,8 @@ services:
     image: quay.io/bluecmd/fortigate_exporter:latest
     restart: unless-stopped
     command: ['-auth-file', '/config/fortigate-key.yaml', '-insecure']
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
     volumes:
       - ./config/fortigate/fortigate-key.yaml:/config/fortigate-key.yaml
     ports:
@@ -91,6 +98,8 @@ services:
     image: prom/prometheus:latest
     restart: unless-stopped
     user: root
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
     ports:
       - 9090:9090
     volumes:
@@ -109,6 +118,8 @@ services:
     container_name: grafana
     image: grafana/grafana-oss:latest
     restart: unless-stopped
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
     ports:
       - '3000:3000'
     volumes:
@@ -123,6 +134,8 @@ services:
     image: b4bz/homer:latest
     container_name: homer
     restart: unless-stopped
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
     ports:
       - '8000:8080'
     volumes:
