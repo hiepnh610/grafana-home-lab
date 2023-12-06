@@ -6,13 +6,13 @@ services:
     container_name: portainer
     image: portainer/portainer-ce:latest
     restart: unless-stopped
-    environment:
-      - TZ=Asia/Ho_Chi_Minh
     ports:
       - 9443:9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
 
@@ -21,8 +21,6 @@ services:
     image: gcr.io/cadvisor/cadvisor:latest
     privileged: true
     restart: unless-stopped
-    environment:
-      - TZ=Asia/Ho_Chi_Minh
     ports:
       - 8080:8080
     volumes:
@@ -31,6 +29,8 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     devices:
       - /dev/kmsg
     networks:
@@ -44,12 +44,12 @@ services:
     image: quay.io/prometheus/node-exporter:latest
     pid: host
     restart: unless-stopped
-    environment:
-      - TZ=Asia/Ho_Chi_Minh
     ports:
       - 9100:9100
     volumes:
       - /:/host:ro,rslave
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
     depends_on:
@@ -69,7 +69,9 @@ services:
       - interval=10s
       - log_limit=10000
       - server_port=9617
-      - TZ=Asia/Ho_Chi_Minh
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
     depends_on:
@@ -80,10 +82,10 @@ services:
     image: quay.io/bluecmd/fortigate_exporter:latest
     restart: unless-stopped
     command: ['-auth-file', '/config/fortigate-key.yaml', '-insecure']
-    environment:
-      - TZ=Asia/Ho_Chi_Minh
     volumes:
       - ./config/fortigate/fortigate-key.yaml:/config/fortigate-key.yaml
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 9710:9710
     networks:
@@ -97,13 +99,13 @@ services:
     image: prom/prometheus:latest
     restart: unless-stopped
     user: root
-    environment:
-      - TZ=Asia/Ho_Chi_Minh
     ports:
       - 9090:9090
     volumes:
       - ./config/prometheus/config.yaml:/etc/prometheus/prometheus.yaml:ro
       - prometheus-data:/prometheus
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
     depends_on:
@@ -117,13 +119,13 @@ services:
     container_name: grafana
     image: grafana/grafana-oss:latest
     restart: unless-stopped
-    environment:
-      - TZ=Asia/Ho_Chi_Minh
     ports:
       - '3000:3000'
     volumes:
       - grafana-data:/var/lib/grafana
       - ./config/grafana/custom.ini:/etc/grafana/grafana.ini
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
     depends_on:
@@ -133,12 +135,12 @@ services:
     image: b4bz/homer:latest
     container_name: homer
     restart: unless-stopped
-    environment:
-      - TZ=Asia/Ho_Chi_Minh
     ports:
       - '8000:8080'
     volumes:
       - ./config/homer/assets:/www/assets
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
     depends_on:
