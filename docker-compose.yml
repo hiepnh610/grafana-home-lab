@@ -11,8 +11,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
 
@@ -29,8 +27,6 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     devices:
       - /dev/kmsg
     networks:
@@ -48,8 +44,6 @@ services:
       - 9100:9100
     volumes:
       - /:/host:ro,rslave
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
     depends_on:
@@ -69,9 +63,6 @@ services:
       - interval=10s
       - log_limit=10000
       - server_port=9617
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
     depends_on:
@@ -84,8 +75,6 @@ services:
     command: ['-auth-file', '/config/fortigate-key.yaml', '-insecure']
     volumes:
       - ./config/fortigate/fortigate-key.yaml:/config/fortigate-key.yaml
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     ports:
       - 9710:9710
     networks:
@@ -104,8 +93,6 @@ services:
     volumes:
       - ./config/prometheus/config.yaml:/etc/prometheus/prometheus.yaml:ro
       - prometheus-data:/prometheus
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
     depends_on:
@@ -124,8 +111,6 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
       - ./config/grafana/custom.ini:/etc/grafana/grafana.ini
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
     depends_on:
@@ -139,8 +124,6 @@ services:
       - '8000:8080'
     volumes:
       - ./config/homer/assets:/www/assets
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     networks:
       - home-lab
     depends_on:
