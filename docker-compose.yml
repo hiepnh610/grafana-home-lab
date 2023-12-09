@@ -130,12 +130,12 @@ services:
       - grafana
 
   cloudflare:
-    container_name: cloudflare
     image: cloudflare/cloudflared:latest
+    container_name: cloudflare
     restart: unless-stopped
+    command: 'tunnel --no-autoupdate run'
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
-    command: 'tunnel --no-autoupdate run'
     depends_on:
       - homer
 
