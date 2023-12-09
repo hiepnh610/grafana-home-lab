@@ -49,7 +49,7 @@ services:
         logo: 'assets/logo/prometheus.png'
         subtitle: 'Visualize'
         tag: 'metrics'
-        url: 'https://grafana.helixnest.com/d/rYdddlPWk/node-exporter?orgId=2&refresh=1m&from=now-1h&to=now'
+        url: 'https://grafana.helixnest.com/d/rYdddlPWk/node?orgId=2&refresh=1m&from=now-1h&to=now'
         target: '_blank'
 
   - name: 'Management'
