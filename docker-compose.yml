@@ -129,6 +129,16 @@ services:
     depends_on:
       - grafana
 
+  cloudflare:
+    container_name: cloudflare
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    command: 'tunnel --no-autoupdate run'
+    depends_on:
+      - homer
+
 volumes:
   prometheus-data:
     driver: local
