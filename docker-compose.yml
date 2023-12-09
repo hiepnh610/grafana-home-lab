@@ -2,6 +2,14 @@
 version: '3.8'
 
 services:
+  speedtest:
+    container_name: speedtest
+    image: openspeedtest/latest
+    restart: unless-stopped
+    ports:
+      - 5000:3000
+      - 5001:3001
+
   portainer:
     container_name: portainer
     image: portainer/portainer-ce:latest
