@@ -20,7 +20,6 @@ services:
         logo: 'assets/logo/adguard.png'
         subtitle: 'Visualize'
         tag: 'metrics'
-        keywords: ''
         url: 'https://grafana.helixnest.com/d/MIBVglomg/adguard?orgId=2&refresh=1m&from=now-1h&to=now'
         target: '_blank'
 
@@ -108,6 +107,15 @@ services:
         subtitle: 'Manage'
         tag: 'management'
         url: 'https://grafana.helixnest.com'
+        target: '_blank'
+
+  - name: 'Utilities'
+    items:
+      - name: 'Speedtest'
+        logo: 'assets/logo/speedtest.png'
+        subtitle: 'utilities'
+        tag: 'utilities'
+        url: 'https://speedtest.helixnest.com'
         target: '_blank'
 
 stylesheet:

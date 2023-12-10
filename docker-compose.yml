@@ -90,8 +90,8 @@ services:
     depends_on:
       - portainer
 
-  snmp:
-    container_name: snmp
+  snmp_exporter:
+    container_name: snmp_exporter
     image: quay.io/prometheus/snmp-exporter
     command: --config.file=/etc/snmp_exporter/snmp.yml
     restart: unless-stopped
@@ -124,7 +124,7 @@ services:
       - node_exporter
       - adguard_exporter
       - fortigate_exporter
-      - snmp
+      - snmp_exporter
 
   grafana:
     container_name: grafana
