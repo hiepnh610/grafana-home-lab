@@ -124,7 +124,6 @@ services:
       - node_exporter
       - adguard_exporter
       - fortigate_exporter
-      - snmp_exporter
 
   grafana:
     container_name: grafana
