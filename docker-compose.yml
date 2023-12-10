@@ -189,7 +189,7 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_MYSQL_DATABASE}
+      MYSQL_DATABASE: ${DB_MYSQL_NAME}
       MYSQL_USER: ${DB_MYSQL_USER}
       MYSQL_PASSWORD: ${DB_MYSQL_PASSWORD}
     volumes:
