@@ -153,8 +153,8 @@ services:
     depends_on:
       - grafana
 
-  cloudflare:
-    container_name: cloudflare
+  cloudflare_tunnel:
+    container_name: cloudflare_tunnel
     image: cloudflare/cloudflared:latest
     restart: unless-stopped
     command: 'tunnel --no-autoupdate run'
