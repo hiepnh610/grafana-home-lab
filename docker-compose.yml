@@ -195,6 +195,8 @@ services:
       MYSQL_PASSWORD: ${DB_MYSQL_PASSWORD}
     volumes:
       - database-data:/var/lib/mysql
+    networks:
+      - home-lab
 
 volumes:
   prometheus-data:
