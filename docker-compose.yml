@@ -43,10 +43,10 @@ services:
       - portainer
 
   node_exporter:
-    command: '--path.rootfs=/host'
     container_name: node_exporter
     image: quay.io/prometheus/node-exporter:latest
     pid: host
+    command: '--path.rootfs=/host'
     restart: unless-stopped
     ports:
       - 9100:9100
@@ -79,8 +79,8 @@ services:
   fortigate_exporter:
     container_name: fortigate_exporter
     image: quay.io/bluecmd/fortigate_exporter:latest
-    restart: unless-stopped
     command: ['-auth-file', '/config/fortigate-key.yaml', '-insecure']
+    restart: unless-stopped
     volumes:
       - ./config/fortigate/fortigate-key.yaml:/config/fortigate-key.yaml
     ports:
@@ -90,10 +90,25 @@ services:
     depends_on:
       - portainer
 
+  snmp:
+    container_name: snmp
+    image: quay.io/prometheus/snmp-exporter
+    command: --config.file=/etc/snmp_exporter/snmp.yml
+    restart: unless-stopped
+    ports:
+      - 9116:9116
+      - 116:116/udp
+    volumes:
+      - snmp-data:/etc/snmp_exporter
+    networks:
+      - home-lab
+    depends_on:
+      - fortigate_exporter
+
   prometheus:
-    command: '--config.file=/etc/prometheus/prometheus.yaml'
     container_name: prometheus
     image: prom/prometheus:latest
+    command: '--config.file=/etc/prometheus/prometheus.yaml'
     restart: unless-stopped
     user: root
     ports:
@@ -109,6 +124,7 @@ services:
       - node_exporter
       - adguard_exporter
       - fortigate_exporter
+      - snmp
 
   grafana:
     container_name: grafana
@@ -125,8 +141,8 @@ services:
       - prometheus
 
   homer:
-    image: b4bz/homer:latest
     container_name: homer
+    image: b4bz/homer:latest
     restart: unless-stopped
     ports:
       - '8000:8080'
@@ -138,8 +154,8 @@ services:
       - grafana
 
   cloudflare:
-    image: cloudflare/cloudflared:latest
     container_name: cloudflare
+    image: cloudflare/cloudflared:latest
     restart: unless-stopped
     command: 'tunnel --no-autoupdate run'
     environment:
@@ -153,6 +169,8 @@ volumes:
   grafana-data:
     driver: local
   portainer-data:
+    driver: local
+  snmp-data:
     driver: local
 
 networks:
