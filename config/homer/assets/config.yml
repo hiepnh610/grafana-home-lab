@@ -5,7 +5,7 @@ subtitle: 'A Helix Nest homepage.'
 header: true
 footer: false
 
-columns: '4'
+columns: '3'
 
 defaults:
   layout: list
