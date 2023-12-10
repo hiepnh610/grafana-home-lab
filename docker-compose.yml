@@ -62,7 +62,7 @@ services:
     image: ebrianne/adguard-exporter:latest
     restart: unless-stopped
     ports:
-      - '9617:9617'
+      - 9617:9617
     environment:
       - adguard_protocol=http
       - adguard_hostname=${ADGUARD_HOST}
@@ -90,20 +90,20 @@ services:
     depends_on:
       - portainer
 
-  snmp_exporter:
-    container_name: snmp_exporter
-    image: quay.io/prometheus/snmp-exporter
-    command: --config.file=/etc/snmp_exporter/snmp.yml
-    restart: unless-stopped
-    ports:
-      - 9116:9116
-      - 116:116/udp
-    volumes:
-      - snmp-data:/etc/snmp_exporter
-    networks:
-      - home-lab
-    depends_on:
-      - fortigate_exporter
+  # snmp_exporter:
+  #   container_name: snmp_exporter
+  #   image: quay.io/prometheus/snmp-exporter
+  #   command: --config.file=/etc/snmp_exporter/snmp.yml
+  #   restart: unless-stopped
+  #   ports:
+  #     - 9116:9116
+  #     - 116:116/udp
+  #   volumes:
+  #     - snmp-data:/etc/snmp_exporter
+  #   networks:
+  #     - home-lab
+  #   depends_on:
+  #     - fortigate_exporter
 
   prometheus:
     container_name: prometheus
@@ -130,7 +130,7 @@ services:
     image: grafana/grafana-oss:latest
     restart: unless-stopped
     ports:
-      - '3000:3000'
+      - 3000:3000
     volumes:
       - grafana-data:/var/lib/grafana
       - ./config/grafana/custom.ini:/etc/grafana/grafana.ini
@@ -144,7 +144,7 @@ services:
     image: b4bz/homer:latest
     restart: unless-stopped
     ports:
-      - '8000:8080'
+      - 8000:8080
     volumes:
       - ./config/homer/assets:/www/assets
     networks:
@@ -162,6 +162,39 @@ services:
     depends_on:
       - homer
 
+  nginx:
+    container_name: nginx
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    environment:
+      DB_MYSQL_HOST: 'db'
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_NAME: ${DB_MYSQL_NAME}
+      DB_MYSQL_PASSWORD: ${DB_MYSQL_PASSWORD}
+      DB_MYSQL_USER: ${DB_MYSQL_USER}
+    volumes:
+      - nginx-data:/data
+    networks:
+      - home-lab
+    depends_on:
+      - db
+
+  db:
+    container_name: database
+    image: 'jc21/mariadb-aria:latest'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_MYSQL_DATABASE}
+      MYSQL_USER: ${DB_MYSQL_USER}
+      MYSQL_PASSWORD: ${DB_MYSQL_PASSWORD}
+    volumes:
+      - database-data:/var/lib/mysql
+
 volumes:
   prometheus-data:
     driver: local
@@ -169,7 +202,11 @@ volumes:
     driver: local
   portainer-data:
     driver: local
-  snmp-data:
+  # snmp-data:
+  #   driver: local
+  nginx-data:
+    driver: local
+  database-data:
     driver: local
 
 networks:
