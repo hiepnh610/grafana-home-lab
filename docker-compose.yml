@@ -10,6 +10,29 @@ services:
       - 5000:3000
       - 5001:3001
 
+  adguard:
+    image: adguard/adguardhome
+    container_name: adguard
+    restart: unless-stopped
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 784:784/udp
+      - 853:853/tcp
+      - 6001:3000/tcp
+      - 6000:80/tcp
+      - 443:443/tcp
+      - 443:443/udp
+      - 853:853/udp
+      - 5443:5443/tcp
+      - 5443:5443/udp
+      - 6060:6060/tcp
+    volumes:
+      - adguard-data-work:/opt/adguardhome/work
+      - adguard-data-conf:/opt/adguardhome/conf
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
   portainer:
     container_name: portainer
     image: portainer/portainer-ce:latest
@@ -212,6 +235,10 @@ volumes:
   nginx-data-ssl:
     driver: local
   database-data:
+    driver: local
+  adguard-data-work:
+    driver: local
+  adguard-data-conf:
     driver: local
 
 networks:
