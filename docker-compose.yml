@@ -58,8 +58,6 @@ services:
       - /dev/kmsg
     networks:
       - home-lab
-    depends_on:
-      - portainer
 
   node_exporter:
     container_name: node_exporter
@@ -73,8 +71,6 @@ services:
       - /:/host:ro,rslave
     networks:
       - home-lab
-    depends_on:
-      - portainer
 
   adguard_exporter:
     container_name: adguard_exporter
@@ -93,8 +89,6 @@ services:
       - server_port=9617
     networks:
       - home-lab
-    depends_on:
-      - portainer
 
   fortigate_exporter:
     container_name: fortigate_exporter
@@ -107,8 +101,6 @@ services:
       - 9710:9710
     networks:
       - home-lab
-    depends_on:
-      - portainer
 
   # snmp_exporter:
   #   container_name: snmp_exporter
@@ -122,8 +114,6 @@ services:
   #     - snmp-data:/etc/snmp_exporter
   #   networks:
   #     - home-lab
-  #   depends_on:
-  #     - fortigate_exporter
 
   prometheus:
     container_name: prometheus
@@ -138,12 +128,6 @@ services:
       - prometheus-data:/prometheus
     networks:
       - home-lab
-    depends_on:
-      - portainer
-      - cadvisor
-      - node_exporter
-      - adguard_exporter
-      - fortigate_exporter
 
   grafana:
     container_name: grafana
@@ -156,8 +140,6 @@ services:
       - ./config/grafana/custom.ini:/etc/grafana/grafana.ini
     networks:
       - home-lab
-    depends_on:
-      - prometheus
 
   homer:
     container_name: homer
@@ -169,8 +151,6 @@ services:
       - ./config/homer/assets:/www/assets
     networks:
       - home-lab
-    depends_on:
-      - grafana
 
   cloudflare_tunnel:
     container_name: cloudflare_tunnel
@@ -179,8 +159,6 @@ services:
     command: 'tunnel --no-autoupdate run'
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
-    depends_on:
-      - homer
 
   nginx:
     container_name: nginx
