@@ -87,6 +87,7 @@ services:
       - adguard_hostname=${ADGUARD_HOST}
       - adguard_username=${ADGUARD_USERNAME}
       - adguard_password=${ADGUARD_PASSWORD}
+      - adguard_port=${ADGUARD_PORT}
       - interval=10s
       - log_limit=10000
       - server_port=9617
