@@ -102,19 +102,6 @@ services:
     networks:
       - home-lab
 
-  # snmp_exporter:
-  #   container_name: snmp_exporter
-  #   image: quay.io/prometheus/snmp-exporter
-  #   command: --config.file=/etc/snmp_exporter/snmp.yml
-  #   restart: unless-stopped
-  #   ports:
-  #     - 9116:9116
-  #     - 116:116/udp
-  #   volumes:
-  #     - snmp-data:/etc/snmp_exporter
-  #   networks:
-  #     - home-lab
-
   prometheus:
     container_name: prometheus
     image: prom/prometheus:latest
@@ -160,41 +147,54 @@ services:
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
 
-  nginx:
-    container_name: nginx
-    image: jc21/nginx-proxy-manager:latest
-    restart: unless-stopped
-    ports:
-      - 80:80
-      - 81:81
-      - 443:443
-    environment:
-      DB_MYSQL_HOST: 'database'
-      DB_MYSQL_PORT: 3306
-      DB_MYSQL_NAME: 'npm'
-      DB_MYSQL_PASSWORD: 'npm'
-      DB_MYSQL_USER: 'npm'
-    volumes:
-      - nginx-data:/data
-      - nginx-data-ssl:/etc/letsencrypt
-    networks:
-      - home-lab
-    depends_on:
-      - database
+  # nginx:
+  #   container_name: nginx
+  #   image: jc21/nginx-proxy-manager:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - 80:80
+  #     - 81:81
+  #     - 443:443
+  #   environment:
+  #     DB_MYSQL_HOST: 'database'
+  #     DB_MYSQL_PORT: 3306
+  #     DB_MYSQL_NAME: 'npm'
+  #     DB_MYSQL_PASSWORD: 'npm'
+  #     DB_MYSQL_USER: 'npm'
+  #   volumes:
+  #     - nginx-data:/data
+  #     - nginx-data-ssl:/etc/letsencrypt
+  #   networks:
+  #     - home-lab
+  #   depends_on:
+  #     - database
 
-  database:
-    container_name: database
-    image: 'jc21/mariadb-aria:latest'
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: 'npm'
-      MYSQL_DATABASE: 'npm'
-      MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: 'npm'
-    volumes:
-      - database-data:/var/lib/mysql
-    networks:
-      - home-lab
+  # database:
+  #   container_name: database
+  #   image: 'jc21/mariadb-aria:latest'
+  #   restart: unless-stopped
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 'npm'
+  #     MYSQL_DATABASE: 'npm'
+  #     MYSQL_USER: 'npm'
+  #     MYSQL_PASSWORD: 'npm'
+  #   volumes:
+  #     - database-data:/var/lib/mysql
+  #   networks:
+  #     - home-lab
+
+  # snmp_exporter:
+  #   container_name: snmp_exporter
+  #   image: quay.io/prometheus/snmp-exporter
+  #   command: --config.file=/etc/snmp_exporter/snmp.yml
+  #   restart: unless-stopped
+  #   ports:
+  #     - 9116:9116
+  #     - 116:116/udp
+  #   volumes:
+  #     - snmp-data:/etc/snmp_exporter
+  #   networks:
+  #     - home-lab
 
 volumes:
   prometheus-data:
@@ -203,18 +203,18 @@ volumes:
     driver: local
   portainer-data:
     driver: local
-  # snmp-data:
-  #   driver: local
-  nginx-data:
-    driver: local
-  nginx-data-ssl:
-    driver: local
-  database-data:
-    driver: local
   adguard-data-work:
     driver: local
   adguard-data-conf:
     driver: local
+  # snmp-data:
+  #   driver: local
+  # nginx-data:
+  #   driver: local
+  # nginx-data-ssl:
+  #   driver: local
+  # database-data:
+  #   driver: local
 
 networks:
   home-lab:
