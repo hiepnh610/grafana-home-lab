@@ -57,3 +57,12 @@ scrape_configs:
         regex: '(?:.+)(?::\/\/)([^:]*).*'
       - target_label: __address__
         replacement: '10.0.10.15:9710'
+
+  - job_name: "ping_exporter"
+    static_configs:
+      - targets: ['ping_exporter:9427']
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: "ping_loss_ratio"
+        target_label: __name__
+        replacement: "ping_loss_percent"
