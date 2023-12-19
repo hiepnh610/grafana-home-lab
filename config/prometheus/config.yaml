@@ -28,6 +28,10 @@ scrape_configs:
     static_configs:
       - targets: ['cadvisor:8080']
 
+  - job_name: "ping_exporter"
+    static_configs:
+      - targets: ['ping_exporter:9427']
+
   - job_name: 'mikrotik'
     static_configs:
       - targets:
@@ -57,7 +61,3 @@ scrape_configs:
         regex: '(?:.+)(?::\/\/)([^:]*).*'
       - target_label: __address__
         replacement: '10.0.10.15:9710'
-
-  - job_name: "ping_exporter"
-    static_configs:
-      - targets: ['ping_exporter:9427']
