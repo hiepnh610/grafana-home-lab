@@ -154,7 +154,7 @@ services:
     ports:
       - 9427:9427
     volumes:
-      - ./config/ping-exporter/config.yml:/config:ro
+      - ./config/ping-exporter:/config:ro
     networks:
       - home-lab
 
