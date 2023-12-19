@@ -154,7 +154,7 @@ services:
     ports:
       - 9427:9427
     volumes:
-      - ping-exporter-data:/config:ro
+      - ./config/ping-exporter/config.yaml:/config:ro
     networks:
       - home-lab
 
@@ -217,8 +217,6 @@ volumes:
   adguard-data-work:
     driver: local
   adguard-data-conf:
-    driver: local
-  ping-exporter-data:
     driver: local
   # snmp-data:
   #   driver: local
