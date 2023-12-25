@@ -147,17 +147,6 @@ services:
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
 
-  ping_exporter:
-    container_name: ping_exporter
-    image: czerwonk/ping_exporter:latest
-    restart: unless-stopped
-    ports:
-      - 9427:9427
-    volumes:
-      - ./config/ping-exporter:/config:ro
-    networks:
-      - home-lab
-
   # nginx:
   #   container_name: nginx
   #   image: jc21/nginx-proxy-manager:latest
