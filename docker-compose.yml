@@ -147,6 +147,21 @@ services:
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
 
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - VERSION=docker
+      - PLEX_CLAIM= #optional
+    volumes:
+      - plex-data-conf:/config
+      - plex-data:/movies
+
   # nginx:
   #   container_name: nginx
   #   image: jc21/nginx-proxy-manager:latest
@@ -206,6 +221,14 @@ volumes:
   adguard-data-work:
     driver: local
   adguard-data-conf:
+    driver: local
+  plex-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/hiep/media/movies
+      o: bind
+  plex-data-conf:
     driver: local
   # snmp-data:
   #   driver: local
