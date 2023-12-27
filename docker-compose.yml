@@ -155,9 +155,8 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ=Asia/Ho_Chi_Minh
       - VERSION=docker
-      - PLEX_CLAIM= #optional
     volumes:
       - plex-data-conf:/config
       - plex-data:/movies
