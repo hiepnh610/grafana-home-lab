@@ -147,6 +147,23 @@ services:
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
 
+  emby:
+    image: lscr.io/linuxserver/emby:latest
+    container_name: emby
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Ho_Chi_Minh
+    volumes:
+      - emby-data-conf:/config
+      - /home/hiep/media/movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920
+    devices:
+      - /dev/dri:/dev/dri
+
   # nginx:
   #   container_name: nginx
   #   image: jc21/nginx-proxy-manager:latest
@@ -206,6 +223,8 @@ volumes:
   adguard-data-work:
     driver: local
   adguard-data-conf:
+    driver: local
+  emby-data-conf:
     driver: local
   # snmp-data:
   #   driver: local
