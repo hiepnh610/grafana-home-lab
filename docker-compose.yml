@@ -9,6 +9,8 @@ services:
     ports:
       - 5000:3000
       - 5001:3001
+    volumes:
+      - speedtest-data:/var/log/letsencrypt
 
   adguard:
     image: adguard/adguardhome
@@ -225,6 +227,8 @@ volumes:
   adguard-data-conf:
     driver: local
   emby-data-conf:
+    driver: local
+  speedtest-data:
     driver: local
   # snmp-data:
   #   driver: local
