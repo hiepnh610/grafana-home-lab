@@ -1,5 +1,5 @@
 'https://10.0.0.1':
-  token: api-key-goes-here
+  token:
   probes:
     exclude:
       - System/SensorInfo
