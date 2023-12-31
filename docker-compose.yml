@@ -26,8 +26,8 @@ services:
       - 8888:80/tcp
       - 6060:6060/tcp
     volumes:
-      - adguard-data-work:/opt/adguardhome/work
-      - adguard-data-conf:/opt/adguardhome/conf
+      - adguard-data:/opt/adguardhome/work
+      - adguard-conf:/opt/adguardhome/conf
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
 
@@ -41,7 +41,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
     networks:
-      - home-lab
+      - helix
 
   cadvisor:
     container_name: cadvisor
@@ -59,7 +59,7 @@ services:
     devices:
       - /dev/kmsg
     networks:
-      - home-lab
+      - helix
 
   node_exporter:
     container_name: node_exporter
@@ -72,7 +72,7 @@ services:
     volumes:
       - /:/host:ro,rslave
     networks:
-      - home-lab
+      - helix
 
   adguard_exporter:
     container_name: adguard_exporter
@@ -90,7 +90,7 @@ services:
       - log_limit=10000
       - server_port=9617
     networks:
-      - home-lab
+      - helix
 
   fortigate_exporter:
     container_name: fortigate_exporter
@@ -102,7 +102,7 @@ services:
     ports:
       - 9710:9710
     networks:
-      - home-lab
+      - helix
 
   prometheus:
     container_name: prometheus
@@ -116,7 +116,7 @@ services:
       - ./config/prometheus/config.yaml:/etc/prometheus/prometheus.yaml:ro
       - prometheus-data:/prometheus
     networks:
-      - home-lab
+      - helix
 
   grafana:
     container_name: grafana
@@ -128,7 +128,7 @@ services:
       - grafana-data:/var/lib/grafana
       - ./config/grafana/custom.ini:/etc/grafana/grafana.ini
     networks:
-      - home-lab
+      - helix
 
   homer:
     container_name: homer
@@ -139,7 +139,7 @@ services:
     volumes:
       - ./config/homer/assets:/www/assets
     networks:
-      - home-lab
+      - helix
 
   cloudflare_tunnel:
     container_name: cloudflare_tunnel
@@ -158,62 +158,26 @@ services:
       - PGID=1000
       - TZ=Asia/Ho_Chi_Minh
     volumes:
-      - emby-data-conf:/config
-      - /home/hiep/media/movies:/data/movies
+      - emby-conf:/config
+      - /home/hiep/shared:/data/movies
     ports:
       - 8096:8096
       - 8920:8920
     devices:
       - /dev/dri:/dev/dri
 
-  # nginx:
-  #   container_name: nginx
-  #   image: jc21/nginx-proxy-manager:latest
-  #   restart: unless-stopped
-  #   ports:
-  #     - 80:80
-  #     - 81:81
-  #     - 443:443
-  #   environment:
-  #     DB_MYSQL_HOST: 'database'
-  #     DB_MYSQL_PORT: 3306
-  #     DB_MYSQL_NAME: 'npm'
-  #     DB_MYSQL_PASSWORD: 'npm'
-  #     DB_MYSQL_USER: 'npm'
-  #   volumes:
-  #     - nginx-data:/data
-  #     - nginx-data-ssl:/etc/letsencrypt
-  #   networks:
-  #     - home-lab
-  #   depends_on:
-  #     - database
-
-  # database:
-  #   container_name: database
-  #   image: 'jc21/mariadb-aria:latest'
-  #   restart: unless-stopped
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: 'npm'
-  #     MYSQL_DATABASE: 'npm'
-  #     MYSQL_USER: 'npm'
-  #     MYSQL_PASSWORD: 'npm'
-  #   volumes:
-  #     - database-data:/var/lib/mysql
-  #   networks:
-  #     - home-lab
-
-  # snmp_exporter:
-  #   container_name: snmp_exporter
-  #   image: quay.io/prometheus/snmp-exporter
-  #   command: --config.file=/etc/snmp_exporter/snmp.yml
-  #   restart: unless-stopped
-  #   ports:
-  #     - 9116:9116
-  #     - 116:116/udp
-  #   volumes:
-  #     - snmp-data:/etc/snmp_exporter
-  #   networks:
-  #     - home-lab
+  snmp_exporter:
+    container_name: snmp_exporter
+    image: quay.io/prometheus/snmp-exporter
+    command: --config.file=/etc/snmp_exporter/snmp.yml
+    restart: unless-stopped
+    ports:
+      - 9116:9116
+      - 116:116/udp
+    volumes:
+      - snmp-data:/etc/snmp_exporter
+    networks:
+      - helix
 
 volumes:
   prometheus-data:
@@ -222,23 +186,17 @@ volumes:
     driver: local
   portainer-data:
     driver: local
-  adguard-data-work:
+  adguard-data:
     driver: local
-  adguard-data-conf:
+  adguard-conf:
     driver: local
-  emby-data-conf:
+  emby-conf:
     driver: local
   speedtest-data:
     driver: local
-  # snmp-data:
-  #   driver: local
-  # nginx-data:
-  #   driver: local
-  # nginx-data-ssl:
-  #   driver: local
-  # database-data:
-  #   driver: local
+  snmp-data:
+    driver: local
 
 networks:
-  home-lab:
+  helix:
     driver: bridge
