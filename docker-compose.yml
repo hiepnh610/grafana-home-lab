@@ -166,19 +166,6 @@ services:
     devices:
       - /dev/dri:/dev/dri
 
-  snmp_exporter:
-    container_name: snmp_exporter
-    image: quay.io/prometheus/snmp-exporter
-    command: --config.file=/etc/snmp_exporter/snmp.yml
-    restart: unless-stopped
-    ports:
-      - 9116:9116
-      - 116:116/udp
-    volumes:
-      - snmp-data:/etc/snmp_exporter
-    networks:
-      - helix
-
 volumes:
   prometheus-data:
     driver: local
@@ -193,8 +180,6 @@ volumes:
   emby-conf:
     driver: local
   speedtest-data:
-    driver: local
-  snmp-data:
     driver: local
 
 networks:
