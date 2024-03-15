@@ -1,5 +1,0 @@
-'https://10.0.0.1':
-  token:
-  probes:
-    exclude:
-      - System/SensorInfo
