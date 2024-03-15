@@ -118,14 +118,6 @@ services:
     networks:
       - helix
 
-  cloudflare_tunnel:
-    container_name: cloudflare_tunnel
-    image: cloudflare/cloudflared:latest
-    restart: unless-stopped
-    command: 'tunnel --no-autoupdate run'
-    environment:
-      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
-
   emby:
     image: lscr.io/linuxserver/emby:latest
     container_name: emby
@@ -155,8 +147,6 @@ volumes:
   adguard-conf:
     driver: local
   emby-conf:
-    driver: local
-  speedtest-data:
     driver: local
 
 networks:
